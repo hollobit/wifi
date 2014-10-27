@@ -1,79 +1,503 @@
 <!DOCTYPE html>
 <html>
-
   <head>
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="description" content="Wifi : WiFi API Specification">
-
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
-
-    <title>Wifi</title>
+    <title>System Settings API</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <script src='https://www.w3.org/Tools/respec/respec-w3c-common' async="" class='remove'></script>
+    <script class="remove">
+      var respecConfig = {
+          noLegacyStyle:       true,
+          specStatus:           "ED",
+          shortName:            "settings",
+          publishDate:          "",
+          previousPublishDate:  "",
+          previousMaturity:     "",
+          edDraftURI:           "http://www.w3.org/2012/sysapps/settings/",
+          // lcEnd:                "",
+          crEnd:                "",
+          editors:  [
+              { name: "Jonathan Jeon (전종홍)",
+                company: "ETRI",
+                companyURL: "http://www.etri.re.kr" },
+              { name: "Sunghan Kim (김성한)",
+                company: "ETRI",
+                companyURL: "http://www.etri.re.kr/" },              
+              { name: "Seungyun Lee (이승윤)",
+                company: "ETRI",
+                companyURL: "http://www.etri.re.kr/" }              
+          ],
+          inlineCSS:    true,
+          noIDLIn:      true,
+          // noIDLSorting: true,
+          // extraCSS:     ["../ReSpec.js/css/respec.css"],
+          wg:           "System Applications Working Group",
+          wgURI:        "http://www.w3.org/2012/sysapps/",
+          wgPublicList: "public-sysapps",
+          wgPatentURI:  "http://www.w3.org/2004/01/pp-impl/43696/status",
+           otherLinks: [{
+            key: "Repository",
+            data: [{
+                    value: "We are on Github.",
+                    href: "https://github.com/hollobit/Settings"
+                }, {
+                    value: "File a bug.",
+                    href: "https://github.com/hollobit/Settings/issues"
+                }, {
+                    value: "Commit history.",
+                    href: "https://github.com/hollobit/Settings/commits/gh-pages"
+                }
+            ]
+        }
+    ]
+     };
+    </script>
+    <style>
+/*HTML5 Tidy screws up if this line is missing.*/
+    figure{
+        display: block;
+        width: auto;
+        margin: 2em auto;
+        text-align: center;
+    }
+    figcaption{
+        display: block;
+        margin-top: 1em;
+    }
+    </style>    
   </head>
+  
+  <!-----------------------------------------------------------------------------
+Style guide to contributors:
+============================
+- this document uses ReSpec, see
+  http://dev.w3.org/2009/dap/ReSpec.js/documentation.html
+- use 80 characters wide lines, whenever possible (except long links)
+- keep sections 2 empty lines apart
+- put comments in front of sections, for better readability with syntax coloring
+  editors
+- use indentation with care: it may improve readability, but at the expense of
+  line lenght
+- when descriptions of attributes is short, use the <dd> elements even when
+  the text also contains conformance statements (e.g. MUST, SHOULD, MAY).
+  No use repeating the same information in a separate paragraph.
+------------------------------------------------------------------------------>
 
   <body>
 
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          <a id="forkme_banner" href="https://github.com/hollobit/wifi">View on GitHub</a>
-
-          <h1 id="project_title">Wifi</h1>
-          <h2 id="project_tagline">WiFi API Specification</h2>
-
-            <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/hollobit/wifi/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/hollobit/wifi/tarball/master">Download this project as a tar.gz file</a>
-            </section>
-        </header>
-    </div>
-
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
-        <h3>
-<a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>Welcome to GitHub Pages.</h3>
-
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
-
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
-</code></pre>
-
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
-
-<h3>
-<a name="designer-templates" class="anchor" href="#designer-templates"><span class="octicon octicon-link"></span></a>Designer Templates</h3>
-
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
-
-<h3>
-<a name="rather-drive-stick" class="anchor" href="#rather-drive-stick"><span class="octicon octicon-link"></span></a>Rather Drive Stick?</h3>
-
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
-
-<h3>
-<a name="authors-and-contributors" class="anchor" href="#authors-and-contributors"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
-
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
-
-<h3>
-<a name="support-or-contact" class="anchor" href="#support-or-contact"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
-
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
-      </section>
-    </div>
-
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p class="copyright">Wifi maintained by <a href="https://github.com/hollobit">hollobit</a></p>
-        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
-      </footer>
-    </div>
-
+    <!-- - - - - - - - - - - - - - -  Abstract - - - - - - - - - - - - - - - -->
+    <section id="abstract">
+      This specification defines a System Level API which offers a simple interface to manage 
+      the global system-level device preferences and settings. A typical use case of the Settings API is 
+      the implementation of a certified application to access and manage the global system-level device preferences.
+    </section>
     
+    <!-- - - - - - - - - - - - Status of this document - - - - - - - - - - - -->
+    <section id="sotd">
+      This document defines a System Level API to manage 
+      the global system-level device preferences and settings. 
+      
+      <p>If you find any issue with this specification, please
+         <a href="https://github.com/hollobit/Settings/issues">file a
+         bug on Github</a>.
 
+    </section>
+    
+    <!-- - - - - - - - - - - - - - - Introduction  - - - - - - - - - - - - - -->
+    <section class="informative">
+      <h2>Introduction</h2>
+      <p>
+        The Settings API allows to manage the global system-level device preferences
+        stored in the system information area, and thus provides the
+        functionality needed to implement an certified application to manage said system settings.
+      </p>
+        An example of use is provided below:
+      
+      <pre class="example highlight"> 	
+var lock = navigator.Settings.createLock();
+var result = lock.set({
+  'wifi.enabled': true
+});
+ 
+result.onsuccess = function () {
+  window.console.log("the settings has been changed");
+}
+ 
+result.onerror = function () {
+  window.console.log("An error occure, the settings remain unchanged");
+}
+      </pre>
+
+      <pre class="example highlight">
+function handleWifi(event) {
+  if (event.settingValue === true) {
+     window.console.log("Hey! I can download that crazy heavy 4GB file")
+  } else {
+     window.console.log("Oh! I should stop downloading that crazy 4GB file")
+  }
+}
+
+navigator.Settings.addObserver('wifi.enabled', handleWifi);
+      </pre>
+
+    </section>
+    
+    <!-- - - - - - - - - - - - - -  Conformance  - - - - - - - - - - - - - - -->
+    <section id="conformance">
+      <p>This specification defines conformance criteria that apply to a single
+      product: the <dfn>user agent</dfn> that implements the interfaces that it
+    contains.</p>
+      
+      <p>Implementations that use ECMAScript to implement the APIs defined in
+      this specification MUST implement them in a manner consistent with the
+      ECMAScript Bindings defined in the Web IDL specification [[!WEBIDL]], as
+    this specification uses that specification and terminology. </p>
+    </section>
+    
+    <!-- - - - - - - - - - - - - -  Terminology  - - - - - - - - - - - - - - -->
+    <section>
+      <h2>Terminology</h2>
+      <p>The <code><a
+      href="http://dev.w3.org/html5/spec/webappapis.html#eventhandler">
+      EventHandler</a></code> interface represents a callback used for event
+      handlers as defined in [[!HTML5]].
+      
+      <p>The concepts <dfn><a
+      href="http://dev.w3.org/html5/spec/webappapis.html#queue-a-task"> queue a
+      task</a></dfn> and <dfn><a
+      href="http://dev.w3.org/html5/spec/webappapis.html#fire-a-simple-event">
+      fire a simple event</a></dfn> are defined in [[!HTML5]].
+      
+      <p>The terms <dfn><a
+      href="http://dev.w3.org/html5/spec/webappapis.html#event-handlers"> event
+      handler</a></dfn> and <dfn><a
+      href="http://dev.w3.org/html5/spec/webappapis.html#event-handler-event-type">
+      event handler event types</a></dfn> are defined in [[!HTML5]].
+      
+      <p>The <dfn><a
+      href="http://dom.spec.whatwg.org/#promise">Promise</a></dfn> interface,
+      the concepts of a <a href=
+      "http://dom.spec.whatwg.org/#concept-resolver"><dfn>resolver</dfn></a>, a
+      <dfn id="dfn-fulfill-algorithm"><a
+      href="http://dom.spec.whatwg.org/#concept-resolver-fulfill"> resolver's
+      fulfill algorithm</a></dfn> and a <dfn id="dfn-reject-algorithm"><a
+      href="http://dom.spec.whatwg.org/#concept-resolver-reject"> resolver's
+      reject algorithm</a></dfn> are defined in [[DOM4]].</p>
+  
+    </section>
+
+    <!-- - - - - - - - - - - - - - Security  - - - - - - - - - - - - - - - - -->
+    <section>
+      <h2>Security and privacy considerations</h2>
+      <p>This API must be only exposed to trusted content</p>
+      
+    </section>
+
+    <section>
+      <h2><a>Navigator</a> Interface</h2>
+       <dl title="partial interface Navigator" class="idl">
+        <dt>readonly attribute SettingsManager settings</dt>
+        <dd>
+          The object that exposes the system settings management functionality.
+        </dd>
+      </dl>
+    </section>
+    
+    <!-- - - - - - - - - SettingsManager Interface - - - - - - - - - - - - - -->
+    <section>
+      <h2><a>SettingsManager</a> Interface</h2>
+      <p>The <a>SettingsManager</a> interface exposes the system setting management
+    functionality.</p>
+      
+    <dl title="interface SettingsManager" class="idl">
+
+    <dt>readonly attribute SettingsLock lock</dt> <dd>Provides kept in a queue of active locks functionality.</dd>
+ 
+    <dt> SettingsLock createLock ()</dt> <dd>This method makes a request for returns a SettingsLock object to safely access settings asynchronously.   It returns a new <a><code>SettingsLock</code></a></dd>
+
+    <dt> void addObserver()</dt> <dd> This method makes a request
+    to allows to bind a function to any change on a given settings by 
+    <code>settingName</code> parameter and according to the callback options
+    described in the <code>callback</code>.
+    
+          <dl class='parameters'>
+         <dt>String settingName</dt> <dd>
+          A string specifying the name of the setting to observe.  
+         </dd> <dt>SettingsEvent callback</dt> <dd>
+          providing information about a change to the value of a setting on the device. 
+         </dd>
+     </dl>
+ 	</dd> 
+    
+    <dt> void removeObserver()</dt> <dd> This method makes a request
+    to remove a callback function that has been added with addObserver()  by
+    <code>settingName</code> parameter and according to the callback options
+    described in the <code>callback</code>.
+          <dl class='parameters'>
+         <dt>String settingName</dt> <dd>
+          The string representing the setting to stop to observe.  
+         </dd> <dt>SettingsEvent callback</dt> <dd>
+          to be removed from the callback stack. 
+         </dd>
+     </dl>
+ 	</dd>     	
+
+        <dt class="no-docs">
+          attribute EventHandler onsettingchange
+        </dt>
+        <dd>May be used to set an event handler to be called when all setting changes.</dd>
+    
+      </dl>
+
+  <section>
+  <h3>Steps</h3>
+  
+  <p> The <dfn><code>createLock</code></dfn> method when invoked MUST run the
+  following steps:
+    <ol>
+	<li>@@TBD
+	</ol>
+
+  <p> The <dfn><code>addObserver</code></dfn> method when invoked MUST run the
+  following steps:
+    <ol>
+	<li>@@TBD
+	</ol>
+
+  <p> The <dfn><code>removeObserver</code></dfn> method when invoked MUST run the
+  following steps:
+    <ol>
+	<li>@@TBD
+	</ol>
+
+	</section>
+
+  <div class='note'>
+  It needs the descrition of detailed steps.
+  </div>
+ 
+   <section>
+    <h2>Event handlers</h2>
+    <p>The following are the <a class="internalDFN"
+    href="#dfn-eventhandler">event handlers</a> (and their corresponding <a
+    class="internalDFN" href="#dfn-eventtypes">event types</a>) that MUST be
+    supported as attributes by the <a>SettingsManager</a> object.
+    
+    <table class="simple">
+      <thead>
+        <tr>
+          <th>event handler</th>
+          <th>event name</th>
+          <th>event type</th>
+          <th>short description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong><code>onsettingchange</code></strong></td>
+          <td><code><dfn>changed</dfn></code></td>
+          <td><a><code>SettingsEvent</code></a></td>
+          <td>handles changed setting</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+</section>
+
+    <!-- - - - - - - - - SettingsLock interface - - - - - - - - - - - -->
+
+	<section>
+  		<h2><a>SettingsLock</a> Interface</h2>
+
+  		<p>The <a>SettingsLock</a> interface are kept in a queue of active locks. 
+  			When a SettingsLock object is created it's placed at the end of the queue. 
+  			Calls to get/set places a request against the lock on which it's called. 
+  			Requests run asynchronously and in the order they are placed against a lock. 
+  			When the last request for a lock is run, and  the success/error event against it has been fired, 
+  			the lock is removed from the queue and the next lock start to be processed			
+  			interface represents the System settings, 
+ 		</p>
+ 		
+   <dl title="interface SettingsLock : EventTarget"
+  class="idl">
+
+    <dt>DOMRequest set()</dt> <dd>Allows to change the values of a set of settings. This method is asychronous and return a <code>DOMRequest</code>.
+        <dl class='parameters'>
+             <dt>SettingsEvent[] settings</dt>
+             <dd>
+               The identifier of the containing a set of key/value pairs where each key represents the string name of a given setting
+             </dd>
+         </dl>
+        </dd>
+
+	<dt>DOMRequest get()</dt> <dd>Allows to retrieve the value of a given setting. This method is asychronous and return a <code>DOMRequest</code>.
+	        <dl class='parameters'>
+             <dt>DOMString settingName</dt>
+             <dd>
+               The name of the setting whose value you wish to retreive
+             </dd>
+         </dl>
+        </dd>
+
+	<dt>void clear()</dt> <dd>Clears any action that have not been done yet (remember that get and set are asynchronous)
+	</dd>
+	
+       <dt class="no-docs">
+          attribute EventHandler closed
+        </dt>
+        <dd>Indicates if the lock is no longer the active lock (true) or if it's still the active lock (false)</dd>
+    </dl> 
+    
+  <section>
+  <h3>Steps</h3>
+  
+  <p> The <dfn><code>set</code></dfn> method when invoked MUST run the
+  following steps:
+    <ol>
+	<li>@@TBD
+	</ol>
+
+  <p> The <dfn><code>get</code></dfn> method when invoked MUST run the
+  following steps:
+    <ol>
+	<li>@@TBD
+	</ol>
+
+ 	</section>
+
+  <div class='note'>
+  It needs the descrition of detailed steps.
+  </div>
+
+</section>
+
+
+    <!-- - - - - - - - - SettingsEvent interface - - - - - - - - - - - -->
+ 
+<section> 
+  <h2><a>SettingsEvent</a> Interface</h2>
+  <p>The <a>SettingsEvent</a> interface represents events 
+  	providing information about a change to the value of a setting on the device.
+
+  <dl title="interface SettingsEvent : Event"  class="idl">
+  	<dt>attribute DOMString settingName</dt>
+  	<dd>MUST specifie the exact name of the setting that has changed.</dd>
+ 	<dt>attribute DOMString settingValue</dt>
+ 	<dd>MUST return the setting's new value.</dd>
+    </dl>
+   </section>
+
+<!-- - - - - - - - - - - - Interface Enumerations  - - - - - - - - - - - - - -->
+  <section>
+    <h2>Enumerations</h2>
+
+    <p>The <code>settings</code> in an <code>SettingsLock</code> can have
+    the following values:
+    <dl class="idl" title="enum settings">
+          <dt>airplanemode.enabled</dt>
+          <dd>
+              Type is Boolean. Default value is false. 
+          </dd>
+          <dt>alarm.enabled</dt>
+          <dd>
+              Type is Boolean. Default value is false. 
+          </dd>
+          <dt>audio.volume.alarm</dt>
+          <dd>
+              Type is Number. Default value is 15. 
+          </dd>
+          <dt>audio.volume.notification</dt>
+          <dd>
+              Type is Number. Default value is 15. 
+          </dd>
+          <dt>audio.volume.telephony</dt>
+          <dd>
+              Type is Number. Default value is 5. 
+          </dd>
+          <dt>bluetooth.enabled</dt>
+          <dd>
+              Type is Boolean. Default value is false. 
+          </dd>
+          <dt>geolocation.enabled</dt>
+          <dd>
+              Type is Boolean. Default value is true. 
+          </dd>
+          <dt>language.current</dt>
+          <dd>
+              Type is String. Default value is 'en-US'. 
+          </dd>          
+          <dt>lockscreen.passcode-lock.code</dt>
+          <dd>
+              Type is String. Default value is '0000'. 
+          </dd>          
+          <dt>lockscreen.passcode-lock.enabled</dt>
+          <dd>
+              Type is Boolean. Default value is false. 
+          </dd>          
+          <dt>lockscreen.notifications-preview.enabled</dt>
+          <dd>
+              Type is Boolean. Default value is true. 
+          </dd>          
+          <dt>lockscreen.enabled</dt>
+          <dd>
+              Type is Boolean. Default value is true. 
+          </dd>          
+          <dt>lockscreen.locked</dt>
+          <dd>
+              Type is Boolean. Default value is true. 
+          </dd>          
+          <dt>lockscreen.unlock-sound.enabled</dt>
+          <dd>
+              Type is Boolean. Default value is false. 
+          </dd>          
+          <dt>mail.sent-sound.enabled</dt>
+          <dd>
+              Type is Boolean. Default value is true. 
+          </dd>          
+          <dt>message.sent-sound.enabled</dt>
+          <dd>
+              Type is Boolean. Default value is true. 
+          </dd>          
+          <dt>powersave.enabled</dt>
+          <dd>
+              Type is Boolean. Default value is false. 
+          </dd>          
+          <dt>ring.enabled</dt>
+          <dd>
+              Type is Boolean. Default value is true. 
+          </dd>         
+          <dt>screen.automatic-brightness</dt>
+          <dd>
+              Type is Boolean. Default value is true. 
+          </dd>         
+          <dt>screen.brightness</dt>
+          <dd>
+              Type is Number. Default value is 1. 
+          </dd>         
+          <dt>vibration.enabled</dt>
+          <dd>
+              Type is Boolean. Default value is true. 
+          </dd>         
+          <dt>wifi.enabled</dt>
+          <dd>
+              Type is Boolean. Default value is true. 
+          </dd>         
+    </dl>
+
+  <div class='note'>
+It needs the clarification of system setting type. (e.g: <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Firefox_OS/Platform/Settings_list">Firefox's setting list</a>, <a href="http://developer.android.com/reference/android/provider/Settings.System.html">Android's setting list</a>...)
+  </div>
+
+    </section>
+
+    <!-- - - - - - - - - Acknowledgements - - - - - - - - - - - - - - - - - -->
+    <section>
+      <h2>Acknowledgements</h2>
+      <p>The editors would like to express their gratitude to the Mozilla B2G
+      Team for their technical guidance, implementation work and support, and
+      specially to Eric Shepherd and Jérémie Patonnier, the original authors of B2G
+      System Setting API.</p>
+    </section>
+    
   </body>
 </html>
